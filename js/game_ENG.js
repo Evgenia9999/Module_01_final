@@ -3,131 +3,104 @@
 (function() {
 
     const FIGURES_ENG = ['rock', 'scissors', 'paper'];
-    const FIGURES_RUS = ['камень', 'ножницы', 'бумага',];
+    const FIGURES_RUS = ['камень', 'ножницы', 'бумага',]
+    const FRASES_ENG = ['you won', 'you lost', 'dead heat', 'Do you want to exit', 'Your score', 'You', 'Computer', 'Score', 'Choose rock, scissors or paper'];
+    const FRASES_RUS = ['вы выиграли', 'вы проиграли','ничья', 'Вы точно хотите выйти', 'Ваш счет', 'Вы', 'Компьютер','Счет', 'Введите камень, ножницы, бумага'];
 
     let compVal = 0;
+    
+    const getRandomIntInclusive = (min, max) => {
+        const random = Math.floor((Math.random() * max + min));
+
+        return random;
+    };
 
 
     const game = (language) => {
         const result = {
         player: 0,
         computer: 0,
-        };
+    };
 
-        Object.defineProperty(result, 'scoreEng', {
+        Object.defineProperty(result, 'scoreGen', {
             get () {
                 if (result.player > result.computer) {
-                    return 'You won';
+                    return won;
                 } else if (result.player < result.computer) {
-                    return 'You lost';
+                    return lost;
                 } else {
-                    return 'Dead heat';
+                    return deadHeat;
                 }
             },
         })
+        const lang = (language === 'EN' || language === 'ENG') ? FIGURES_ENG : FIGURES_RUS;
 
-        Object.defineProperty(result, 'scoreRus', {
-            get () {
-                if (result.player > result.computer) {
-                    return 'Вы выиграли';
-                } else if (result.player < result.computer) {
-                    return 'Вы проиграли';
-                } else {
-                    return 'Ничья';
-                }
-            },
-        })
+        console.log('lang: ', lang);
+        const [rock, scis, pap] = lang;
 
-        const lang = (language === 'EN' || language === 'ENG') ?
-        FIGURES_ENG : FIGURES_RUS;
+        const langPhrases = (language === 'EN' || language === 'ENG') ? FRASES_ENG : FRASES_RUS;
+        const [won, lost, deadHeat, exit, yourScore, you, comp, score, repeat] = langPhrases;
+        console.log(langPhrases);
+                
+            
 
-        const [x , y , z] = lang;
-
-        const getRandomIntInclusive = (min, max) => {
-            const random = Math.floor((Math.random() * max + min));
-
-        if (random === 1) {
-            return compVal = x;
-            } else if (random === 2) {
-            return compVal = y;
-            } else if (random === 3) {
-            return compVal = z;
-            }
-        };
-    
         return function start() {
 
-            console.log(getRandomIntInclusive(1, 3))
+        const compRandom = getRandomIntInclusive(1, 3);
+        console.log('compRandom: ', compRandom);
 
-            if (language === 'EN' || language === 'ENG') {
-
-                const isertVal = prompt('rock, scissors, paper?');
-
-                if (isertVal === null) {
-                    const r = confirm('Do you want to exit?'); 
-                    if (r === true) {
-                        alert(`Your score: \r\n You: ${result.player} \r\n Computer: ${result.computer} \r\n ScoreEng: ${result.scoreEng}`);
-                        return null;
-                    } else {
-                        start();
-                    }
-                };
+        const nameRandom = () => {
             
-                if (isertVal === '') {
-                    alert ('You need to enter: rock, scissors or paper');
+            if (compRandom === 1) {
+                return compVal = rock;
+                } else if (compRandom === 2) {
+                return compVal = scis;
+                } else if (compRandom === 3) {
+                return compVal = pap;
+                }
+        }
+        nameRandom();
+        console.log(compVal);
+
+            const insertStr = prompt(`${rock}, ${scis}, ${pap} ?`);
+        
+            if (insertStr === null) {
+            const r = confirm(`${exit}?`); 
+            if (r === true) {
+            alert(`${yourScore}: \r\n ${you}: ${result.player} \r\n ${comp}: ${result.computer} \r\n ${score}: ${result.scoreGen}`)
+                return null;
+            } else {
+                start();
+            }
+            };
+            
+            let insertVal = insertStr.toLowerCase();
+            console.log('insertVal: ', insertVal, insertVal[0], typeof insertVal);
+                
+                
+            if ((insertVal[0] !== rock[0]) && (insertVal[0] !== scis[0]) && (insertVal[0] !== pap[0])) {
+                    alert (repeat);
                     start();
-                } else if (isertVal[0] === compVal[0]) {
-                    alert('Dead heat');
+                } else if (insertVal[0] === compVal[0]) {
+                    alert(deadHeat);
                     return start();
-                } else if (((compVal === 'paper') && (isertVal === y[0])) || ((compVal === 'scissors') && (isertVal === x[0])) || ((compVal === 'rock') && (isertVal === z[0]))) {
+                } else if (((compVal === pap) && (insertVal[0] === scis[0])) || ((compVal === scis) && (insertVal[0] === rock[0])) || ((compVal === rock) && (insertVal[0] === pap[0]))) {
                     result.player += 1;
-                alert('You won');
+                    console.log('result.player: ', result.player);
+                    alert(won);
                     return start();
                 } else {
                     result.computer += 1;
-                    alert('You lost');
+                    console.log('result.computer: ', result.computer);
+                    alert(lost);
                     return start();
                 }
-
-            } else {
-
-                const [x , y , z] = FIGURES_RUS;
-
-                const isertVal = prompt('камень, ножницы, бумага?');
-                
-                if (isertVal === null) {
-                    const r = confirm('Вы точно хотите выйти?'); 
-                    if (r === true) {
-                        alert(`Ваш счет: \r\n Вы: ${result.player} \r\n Компьютер: ${result.computer} \r\n Счет: ${result.scoreRus}`)
-                        return null;
-                    } else {
-                        start();
-                    }
-                };
-            
-                    if (isertVal === '') {
-                        alert ('Введите камень, ножницы, бумага');
-                        start();
-                    } else if (isertVal[0] === compVal[0]) {
-                        alert('Ничья');
-                        return start();
-                    } else if (((compVal === 'бумага') && (isertVal === y[0])) || ((compVal === 'ножницы') && (isertVal === x[0])) || ((compVal === 'камень') && (isertVal === z[0]))) {
-                        result.player += 1;
-                        console.log('result.player: ', result.player);
-                        alert('Вы выиграли');
-                        return start();
-                    } else {
-                        result.computer += 1;
-                        console.log('result.computer: ', result.computer);
-                        alert('Вы проиграли');
-                        return start();
-                    }
-            }
-
-        };
+            };
     }
     window.RPS = game;
 
 })();
+
+
 
 

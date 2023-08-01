@@ -29,45 +29,56 @@
         computer: 0,
     };
 
+    Object.defineProperty(result, 'scoreRus', {
+        get () {
+            if (result.player > result.computer) {
+                return 'вы выиграли';
+            } else if (result.player < result.computer) {
+                return 'вы проиграли';
+            } else {
+                return 'ничья';
+            }
+        },
+    })
+
         return function start() {
 
             console.log('computer', getRandomIntInclusive(1, 3));
-            console.log(typeof compVal[0]);
+            console.log('compVal[0]', compVal[0], typeof compVal[0]);
 
-            const isertVal = prompt('камень, ножницы, бумага?');
-            console.log('isertVal: ', isertVal);
-            console.log(typeof isertVal);
-            
-
-
-            if (isertVal === null) {
-                const r = confirm('Вы точно хотите выйти?'); 
-                if (r === true) {
-                    alert(`Ваш счет: \r\n Вы: ${result.player} \r\n Компьютер: ${result.computer}`)
-                    return null;
-                } else {
-                    start();
-                }
-                };
+            const insertStr = prompt('камень, ножницы, бумага?');
         
-                if (isertVal === '') {
-                alert ('Введите камень, ножницы, бумага');
+            if (insertStr === null) {
+            const r = confirm('Вы точно хотите выйти?'); 
+            if (r === true) {
+                alert(`Ваш счет: \r\n Вы: ${result.player} \r\n Компьютер: ${result.computer} \r\n Счет: ${result.scoreRus}`)
+                return null;
+            } else {
                 start();
-                } else if (isertVal[0] === compVal[0]) {
-                alert('Ничья');
-                return start();
-                } else if (((compVal === 'бумага') && (isertVal === y[0])) || ((compVal === 'ножницы') && (isertVal === x[0])) || ((compVal === 'камень') && (isertVal === z[0]))) {
-                result.player += 1;
-                console.log('result.player: ', result.player);
-                alert('Вы выиграли');
-                return start();
+            }
+            };
+            
+            let insertVal = insertStr.toLowerCase();
+            console.log('insertVal: ', insertVal, insertVal[0], typeof insertVal);
+                
+                
+            if ((insertVal[0] !== x[0]) && (insertVal[0] !== y[0]) && (insertVal[0] !== z[0])) {
+                    alert ('Введите камень, ножницы, бумага');
+                    start();
+                } else if (insertVal[0] === compVal[0]) {
+                    alert('Ничья');
+                    return start();
+                } else if (((compVal === z) && (insertVal[0] === y[0])) || ((compVal === y) && (insertVal[0] === x[0])) || ((compVal === x) && (insertVal[0] === z[0]))) {
+                    result.player += 1;
+                    console.log('result.player: ', result.player);
+                    alert('Вы выиграли');
+                    return start();
                 } else {
-                result.computer += 1;
-                console.log('result.computer: ', result.computer);
-                alert('Вы проиграли');
-                return start();
+                    result.computer += 1;
+                    console.log('result.computer: ', result.computer);
+                    alert('Вы проиграли');
+                    return start();
                 }
-
         };
     }
     window.RPS = game;
