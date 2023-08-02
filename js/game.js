@@ -62,13 +62,13 @@
             console.log('insertVal: ', insertVal, insertVal[0], typeof insertVal);
                 
                 
-            if ((insertVal[0] !== x[0]) && (insertVal[0] !== y[0]) && (insertVal[0] !== z[0])) {
+            if (!(x.includes(insertVal) || y.includes(insertVal) || z.includes(insertVal))) {
                     alert ('Введите камень, ножницы, бумага');
                     start();
-                } else if (insertVal[0] === compVal[0]) {
+                } else if (compVal.includes(insertVal)) {
                     alert('Ничья');
                     return start();
-                } else if (((compVal === z) && (insertVal[0] === y[0])) || ((compVal === y) && (insertVal[0] === x[0])) || ((compVal === x) && (insertVal[0] === z[0]))) {
+                } else if (((compVal === z) && y.includes(insertVal)) || ((compVal === y) && x.includes(insertVal)) || ((compVal === x) && z.includes(insertVal))) {
                     result.player += 1;
                     console.log('result.player: ', result.player);
                     alert('Вы выиграли');
@@ -84,5 +84,7 @@
     window.RPS = game;
 
 })();
+
+
 
 

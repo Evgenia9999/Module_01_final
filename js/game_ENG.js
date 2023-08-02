@@ -75,16 +75,16 @@
             };
             
             let insertVal = insertStr.toLowerCase();
-            console.log('insertVal: ', insertVal, insertVal[0], typeof insertVal);
+            console.log('insertVal: ', insertVal, typeof insertVal);
                 
                 
-            if ((insertVal[0] !== rock[0]) && (insertVal[0] !== scis[0]) && (insertVal[0] !== pap[0])) {
+            if (!(rock.includes(insertVal)) && !(scis.includes(insertVal)) && !(pap.includes(insertVal))) {
                     alert (repeat);
                     start();
-                } else if (insertVal[0] === compVal[0]) {
+                } else if (compVal.includes(insertVal)) {
                     alert(deadHeat);
                     return start();
-                } else if (((compVal === pap) && (insertVal[0] === scis[0])) || ((compVal === scis) && (insertVal[0] === rock[0])) || ((compVal === rock) && (insertVal[0] === pap[0]))) {
+                } else if (((compVal === pap) && scis.includes(insertVal)) || ((compVal === scis) && rock.includes(insertVal)) || ((compVal === rock) && pap.includes(insertVal))) {
                     result.player += 1;
                     console.log('result.player: ', result.player);
                     alert(won);
@@ -97,9 +97,10 @@
                 }
             };
     }
-    window.RPS = game;
+    window.RPS_ENG = game;
 
 })();
+
 
 
 
