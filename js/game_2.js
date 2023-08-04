@@ -1,5 +1,8 @@
 'use strict';
 
+
+
+
 (function() {
 
     const game = () => {
@@ -32,9 +35,11 @@
         };
 
     return function start() {
-
         let userNum = prompt(`Загадайте число шариков от 1 до ${balls.player}`)
         console.log('userNum: ', userNum);
+
+        let botRandomConst = botRandom();
+        console.log('botRandomConst: ', botRandomConst);
 
             if (userNum === null) {
                 const r = confirm('Вы точно хотите выйти?'); 
@@ -49,32 +54,6 @@
                 return start();
             };
 
-        const botRandomConst = botRandom();
-        console.log('botRandomConst: ', botRandomConst);
-
-        const minNumCheck = () => {
-            if (balls.player < 1) {
-                const cancel = confirm(`Вы проиграли. У вас не осталось шаров.\r\nВаш счет: \r\n Вы: ${balls.player} \r\n Компьютер: ${balls.computer} \r\n Счет: ${balls.score}\r\nХотите сыграть еще разок?`);
-                if (cancel !== true) {
-                    return null;
-                } 
-                else {
-                    startOver();
-                    start();
-                };
-            } else if (balls.computer < 1) {
-                const cancel = confirm(`Вы выиграли. У компьютера не осталось шаров.\r\nВаш счет: \r\n Вы: ${balls.player} \r\n Компьютер: ${balls.computer} \r\n Счет: ${balls.score}\r\nХотите сыграть еще разок?`);
-                if (cancel !== true) {
-                    return null;
-                } 
-                else {
-                    startOver();
-                    start();
-                };
-            } else {
-                start();
-            };
-        };
 
             if ((!(userNum % 2) && (botRandomConst === 'even')) || ((userNum % 2) && (botRandomConst === 'odd'))) {
                 alert('Бот угадал!');
@@ -96,11 +75,92 @@
                         console.log('balls.computer: ', balls.computer);
                     }
             };
-
-        minNumCheck();
-    };
-    };
-
+    
+        
+            if (balls.player < 1) {
+                const cancel = confirm(`Вы проиграли. У вас не осталось шаров.\r\nВаш счет: \r\n Вы: ${balls.player} \r\n Компьютер: ${balls.computer} \r\n Счет: ${balls.score}\r\nХотите сыграть еще разок?`);
+                if (cancel !== true) {
+                    return null;
+                } 
+                else {
+                    startOver();
+                    start();
+                };
+            } else if (balls.computer < 1) {
+                const cancel = confirm(`Вы выиграли. У компьютера не осталось шаров.\r\nВаш счет: \r\n Вы: ${balls.player} \r\n Компьютер: ${balls.computer} \r\n Счет: ${balls.score}\r\nХотите сыграть еще разок?`);
+                if (cancel !== true) {
+                    return null;
+                } 
+                else {
+                    startOver();
+                    start();
+                };
+            } else {
+                const botTurnFoo = () => {
+                    const botTurn = () => {
+                        const randomBotTurn = Math.floor((Math.random() * balls.computer + 1));
+                        console.log('randomBotTurn: ', randomBotTurn);
+                    return randomBotTurn;
+                    }
+                    const botTurnConst = botTurn();
+        
+                    let userGuess = confirm('Число четное?');
+                    if (userGuess === true) {
+                        userGuess = 'even';
+                    } 
+                    else {
+                        userGuess = 'odd'
+                    };
+                    console.log('userGuess: ', userGuess);
+        
+                    if ((!(botTurnConst % 2) && (userGuess === 'even')) || ((botTurnConst % 2) && (userGuess === 'odd'))) {
+                        alert('Угадали!');
+                        balls.player += botTurnConst;
+                        console.log('balls.player: ', balls.player);
+                        balls.computer -= botTurnConst;
+                        console.log('balls.computer: ', balls.computer);
+                        } else {
+                            alert('Не угадали!')
+                                if (botTurnConst < balls.player) {
+                                    balls.player -= botTurnConst;
+                                    console.log('balls.player: ', balls.player);
+                                    balls.computer += botTurnConst;
+                                    console.log('balls.computer: ', balls.computer);
+                                } else {
+                                    balls.computer += botTurnConst;
+                                    console.log('balls.computer: ', balls.computer);
+                                    balls.player = 0;
+                                    console.log('balls.player: ', balls.player);
+                                }
+                        };
+                
+                    
+                        if (balls.player < 1) {
+                            const cancel = confirm(`Вы проиграли. У вас не осталось шаров.\r\nВаш счет: \r\n Вы: ${balls.player} \r\n Компьютер: ${balls.computer} \r\n Счет: ${balls.score}\r\nХотите сыграть еще разок?`);
+                            if (cancel !== true) {
+                                return null;
+                            } 
+                            else {
+                                startOver();
+                                start();
+                            };
+                        } else if (balls.computer < 1) {
+                            const cancel = confirm(`Вы выиграли. У компьютера не осталось шаров.\r\nВаш счет: \r\n Вы: ${balls.player} \r\n Компьютер: ${balls.computer} \r\n Счет: ${balls.score}\r\nХотите сыграть еще разок?`);
+                            if (cancel !== true) {
+                                return null;
+                            } 
+                            else {
+                                startOver();
+                                start();
+                            };    
+                        } else {
+                            start();    
+                }
+                }
+                botTurnFoo();
+                } 
+    }
+}
     window.marble = game;
 
 })();
@@ -120,7 +180,11 @@
 
 
 
-
+// let player_1 = userNum;
+//         let player_2 = botRandomConst;
+//         let ballsNum1 = balls.player;
+//         let ballsNum2 = balls.computer;
+//         let playerScore = balls.score
 
 
 
