@@ -1,8 +1,5 @@
 'use strict';
 
-
-
-
 (function() {
 
     const game = () => {
@@ -36,10 +33,8 @@
 
     return function start() {
         let userNum = prompt(`Загадайте число шариков от 1 до ${balls.player}`)
-        console.log('userNum: ', userNum);
 
         let botRandomConst = botRandom();
-        console.log('botRandomConst: ', botRandomConst);
 
             if (userNum === null) {
                 const r = confirm('Вы точно хотите выйти?'); 
@@ -56,24 +51,19 @@
 
 
             if ((!(userNum % 2) && (botRandomConst === 'even')) || ((userNum % 2) && (botRandomConst === 'odd'))) {
-                alert('Бот угадал!');
                 balls.player -= +userNum;
-                console.log('balls.player: ', balls.player);
                 balls.computer += +userNum;
-                console.log('balls.computer: ', balls.computer);
+                alert(`Бот угадал!\r\nВаш счет: ${balls.player}\r\nCчет компьютера: ${balls.computer}`);
             } else {
-                alert('Бот проиграл!')
-                    if (userNum < balls.computer) {
-                        balls.player += +userNum;
-                        console.log('balls.player: ', balls.player);
-                        balls.computer -= +userNum;
-                        console.log('balls.computer: ', balls.computer);
-                    } else {
-                        balls.player += balls.computer;
-                        console.log('balls.player: ', balls.player);
-                        balls.computer = 0;
-                        console.log('balls.computer: ', balls.computer);
-                    }
+                if (userNum < balls.computer) {
+                    balls.player += +userNum;
+                    balls.computer -= +userNum;
+                    alert(`Бот проиграл!\r\nВаш счет: ${balls.player}\r\nCчет компьютера: ${balls.computer}`)
+                } else {
+                    balls.player += balls.computer;
+                    balls.computer = 0;
+                    alert(`Бот проиграл!\r\nВаш счет: ${balls.player}\r\nCчет компьютера: ${balls.computer}`)
+                }
             };
     
         
@@ -99,8 +89,7 @@
                 const botTurnFoo = () => {
                     const botTurn = () => {
                         const randomBotTurn = Math.floor((Math.random() * balls.computer + 1));
-                        console.log('randomBotTurn: ', randomBotTurn);
-                    return randomBotTurn;
+                        return randomBotTurn;
                     }
                     const botTurnConst = botTurn();
         
@@ -111,26 +100,20 @@
                     else {
                         userGuess = 'odd'
                     };
-                    console.log('userGuess: ', userGuess);
         
                     if ((!(botTurnConst % 2) && (userGuess === 'even')) || ((botTurnConst % 2) && (userGuess === 'odd'))) {
-                        alert('Угадали!');
                         balls.player += botTurnConst;
-                        console.log('balls.player: ', balls.player);
                         balls.computer -= botTurnConst;
-                        console.log('balls.computer: ', balls.computer);
+                        alert(`Угадали!\r\nВаш счет: ${balls.player}\r\nCчет компьютера: ${balls.computer}`);
                         } else {
-                            alert('Не угадали!')
                                 if (botTurnConst < balls.player) {
                                     balls.player -= botTurnConst;
-                                    console.log('balls.player: ', balls.player);
                                     balls.computer += botTurnConst;
-                                    console.log('balls.computer: ', balls.computer);
+                                    alert(`Не угадали!\r\nВаш счет: ${balls.player}\r\nCчет компьютера: ${balls.computer}`)
                                 } else {
-                                    balls.computer += botTurnConst;
-                                    console.log('balls.computer: ', balls.computer);
+                                    balls.computer += balls.player;
                                     balls.player = 0;
-                                    console.log('balls.player: ', balls.player);
+                                    alert(`Не угадали!\r\nВаш счет: ${balls.player}\r\nCчет компьютера: ${balls.computer}`)
                                 }
                         };
                 
@@ -164,120 +147,4 @@
     window.marble = game;
 
 })();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// let player_1 = userNum;
-//         let player_2 = botRandomConst;
-//         let ballsNum1 = balls.player;
-//         let ballsNum2 = balls.computer;
-//         let playerScore = balls.score
-
-
-
-
-
-
-
-
-// (function() {
-
-
-//     const FIGURES_RUS = ['камень', 'ножницы', 'бумага',]
-
-//     const [x , y , z] = FIGURES_RUS;
-
-//     let compVal = 0;
-    
-//     const getRandomIntInclusive = (min, max) => {
-//         const random = Math.floor((Math.random() * max + min));
-//         console.log(random);
-
-//         if (random === 1) {
-//             return compVal = x;
-//             } else if (random === 2) {
-//             return compVal = y;
-//             } else if (random === 3) {
-//             return compVal = z;
-//             }
-//     };
-
-
-//     const game = (language) => {
-//         const result = {
-//         player: 0,
-//         computer: 0,
-//     };
-
-//     Object.defineProperty(result, 'scoreRus', {
-//         get () {
-//             if (result.player > result.computer) {
-//                 return 'вы выиграли';
-//             } else if (result.player < result.computer) {
-//                 return 'вы проиграли';
-//             } else {
-//                 return 'ничья';
-//             }
-//         },
-//     })
-
-//         return function start() {
-
-//             console.log('computer', getRandomIntInclusive(1, 3));
-//             console.log('compVal[0]', compVal[0], typeof compVal[0]);
-
-//             const insertStr = prompt('камень, ножницы, бумага?');
-        
-//             if (insertStr === null) {
-//             const r = confirm('Вы точно хотите выйти?'); 
-//             if (r === true) {
-//                 alert(`Ваш счет: \r\n Вы: ${result.player} \r\n Компьютер: ${result.computer} \r\n Счет: ${result.scoreRus}`)
-//                 return null;
-//             } else {
-//                 start();
-//             }
-//             };
-            
-//             let insertVal = insertStr.toLowerCase();
-//             console.log('insertVal: ', insertVal, insertVal[0], typeof insertVal);
-                
-                
-//             if (!(x.includes(insertVal) || y.includes(insertVal) || z.includes(insertVal))) {
-//                     alert ('Введите камень, ножницы, бумага');
-//                     start();
-//                 } else if (compVal.includes(insertVal)) {
-//                     alert('Ничья');
-//                     return start();
-//                 } else if (((compVal === z) && y.includes(insertVal)) || ((compVal === y) && x.includes(insertVal)) || ((compVal === x) && z.includes(insertVal))) {
-//                     result.player += 1;
-//                     console.log('result.player: ', result.player);
-//                     alert('Вы выиграли');
-//                     return start();
-//                 } else {
-//                     result.computer += 1;
-//                     console.log('result.computer: ', result.computer);
-//                     alert('Вы проиграли');
-//                     return start();
-//                 }
-//         };
-//     }
-//     window.RPS = game;
-
-// })();
-
-
-
 
